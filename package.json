@@ -1,0 +1,18 @@
+{
+  "name": "caso",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.4",
+    "redis": "^4.6.13"
+  }
+}

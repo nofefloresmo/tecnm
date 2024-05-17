@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis02
+      - mongo01
+      - mongo02
+      - mongo03
+    networks:
+      - red02
+
+  redis02:
+    image: redis
+    networks:
+      - red02
+
+  mongo01:
+    image: mongo:latest
+    command: [ "mongod", "--replSet", "replica01" ]
+    ports:
+      - "27020:27017"
+    networks:
+      - red02
+    #volumes:
+    #  - ./api/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+
+  mongo02:
+    image: mongo:latest
+    command: [ "mongod", "--replSet", "replica01" ]
+    ports:
+      - "27021:27017"
+    networks:
+      - red02
+
+  mongo03:
+    image: mongo:latest
+    command: [ "mongod", "--replSet", "replica01" ]
+    ports:
+      - "27022:27017"
+    networks:
+      - red02
+
+networks:
+  red02:
