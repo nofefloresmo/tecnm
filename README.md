@@ -1,7 +1,38 @@
 # TecNM
 
 6.1-Incluir estructura del proyecto
+/CASO
+|---/.vscode
+|---/node_modules
+|---/src
+|    |---/controllers
+|    |   |---controladorestecnm.js
+|    |
+|    |---/middleware
+|    |   |---logger.js
+|    |
+|    |---/models
+|    |   |---tecnm.js
+|    |
+|    |---/routes
+|    |   |---cache.js
+|    |   |---rutastecnm.js
+|    |
+|    |---connection.js
+|    |---server.js
+|
+|---/.dockerignore
+|---/.gitignore
+|---docker-compose.yml
+|---Dockerfile
+|---Dockerfile.mongo
+|---init-mongo.js
+|---package-lock.json
+|---package.json
+|---README.md
+
 6.2-Modelado de datos (MongoDB, Redis)
+
 6.3-Tabla de endpoints
 6.4-Códigos y procedimientos documentados
 6.5-Dockerfile

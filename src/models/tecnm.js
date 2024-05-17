@@ -72,14 +72,6 @@ const PlanDeEstudiosSchema = new mongoose.Schema({
     totalCreditos: Number
 });
 
-/* // Crea los modelos a partir de los esquemas, especificando los nombres de las colecciones en plural (excepto planDeEstudios)
-const Alumno = mongoose.model("Alumno", AlumnoSchema, "alumnos");
-const Docente = mongoose.model("Docente", DocenteSchema, "docentes");
-const Materia = mongoose.model("Materia", MateriaSchema, "materias");
-const Grupo = mongoose.model("Grupo", GrupoSchema, "grupos");
-const Aula = mongoose.model("Aula", AulaSchema, "aulas");
-const PlanDeEstudios = mongoose.model("PlanDeEstudios", PlanDeEstudiosSchema, "planDeEstudios"); */
-
 // Crea los modelos a partir de los esquemas, especificando los nombres de las colecciones
 const Alumno = mongoose.model("Alumno", AlumnoSchema);
 const Docente = mongoose.model("Docente", DocenteSchema);

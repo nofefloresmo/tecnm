@@ -27,8 +27,6 @@ services:
       - "27020:27017"
     networks:
       - red02
-    #volumes:
-    #  - ./api/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
 
   mongo02:
     image: mongo:latest
