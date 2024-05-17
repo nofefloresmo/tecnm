@@ -25,7 +25,7 @@ app.use((err, req, res, next) => {
 // Conectar a la base de datos
 db.connect()
     .then(() => {
-        console.log("Conexión a la base de datos exitosa");
+        console.log("Conectado a la base de datos de forma exitosa");
         // Iniciar el servidor solo si la conexión a la base de datos es exitosa
         app.listen(PORT, () => {
             console.log("Server en http://localhost:" + PORT);

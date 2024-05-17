@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "child_process": "^1.0.2",
+    "dockerode": "^4.0.2",
     "express": "^4.19.2",
     "mongoose": "^8.3.4",
     "redis": "^4.6.13"
