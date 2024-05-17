@@ -1,49 +1,58 @@
-// cache.js
 const redis = require("redis");
 const client = redis.createClient({
-    socket: {
-        port: 6379,
-        host: "redis02",
-    },
+    url: `redis://redis02:6379`,
 });
 
-client.on("ready", () => {
-    console.log("Connected to Redis");
+client.on("error", (err) => {
+    console.error("Redis error de conexion:", err);
 });
 
-const cache = async function (req, res, next) {
-    let fecha = new Date();
+client
+    .connect()
+    .then(() => {
+        console.log("Conectado-->> Redis");
+    })
+    .catch((err) => {
+        console.error("Error conexion a Redis:", err);
+    });
 
-    // Check if the Redis client is ready before sending commands
-    if (client.status === "ready") {
-        // Guarda la petición
-        await client.set(
-            "request:" + fecha.toISOString(),
-            JSON.stringify({
+const cache = (req, res, next) => {
+    res.on("finish", async () => {
+        if (!client.isOpen) {
+            console.error("Redis client -->> No conectado.");
+            return;
+        }
+        const key = `${req.method}: ${Date.now()
+            }: ${req.originalUrl}`;
+        const logEntry = JSON.stringify({
+            time: new Date(),
+            req: {
                 method: req.method,
                 path: req.route.path,
-                body: req.body,
+                url: req.originalUrl,
+                headers: req.headers,
                 query: req.query,
                 params: req.params,
-            })
-        );
-
-        // Guarda la respuesta en un middleware posterior
-        const oldSend = res.send;
-        res.send = function (data) {
-            client.set(
-                "response:" + fecha.toISOString(),
-                JSON.stringify({
-                    data,
-                    status: this.statusCode,
-                })
-            );
-            oldSend.apply(res, arguments);
-        };
-    } else {
-        console.error("Redis client is not ready");
-    }
-
+                body: req.body,
+            },
+            res: {
+                statusCode: res.statusCode,
+                statusMessage: res.statusMessage,
+            },
+        });
+        try {
+            await client.set(key, logEntry, "EX", 60 * 60 * 24);
+            // Recuperar el valor almacenado para verificar que se guardó correctamente
+            const value = await client.get(key);
+            if (value) {
+                console.log("Almacenamiento exitoso:", value);
+            } else {
+                console.error("No se encontró ningún valor para la clave:", key);
+            }
+        } catch (err) {
+            console.error("Error al salvar:", err);
+        }
+    });
     next();
 };
 
