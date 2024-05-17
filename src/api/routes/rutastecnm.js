@@ -4,7 +4,7 @@ const cache = require("./cache");
 const { Alumno, Docente, Materia, Grupo, Aula, PlanDeEstudios } = require("../models/tecnm");
 
 // Q1. Listar las materias que un alumno ha cursado.
-router.get("/alumnos/:id/materias", async (req, res) => {
+router.get("/alumnos/:id/materias", cache, async (req, res) => {
     try {
         const alumnoId = req.params.id;
         const alumno = await Alumno.aggregate([
@@ -42,7 +42,7 @@ router.get("/alumnos/:id/materias", async (req, res) => {
 });
 
 // Q2. Listar los alumnos que están cursando una materia específica de un grupo específico.
-router.get("/grupos/:grupoId/materias/:materiaId/alumnos", async (req, res) => {
+router.get("/grupos/:grupoId/materias/:materiaId/alumnos", cache, async (req, res) => {
     try {
         const grupoId = req.params.grupoId;
         const materiaId = req.params.materiaId;
@@ -78,7 +78,7 @@ router.get("/grupos/:grupoId/materias/:materiaId/alumnos", async (req, res) => {
 });
 
 // Q3. Listar las calificaciones de un alumno en todas sus materias cursadas.
-router.get("/alumnos/:id/calificaciones", async (req, res) => {
+router.get("/alumnos/:id/calificaciones", cache, async (req, res) => {
     try {
         const alumnoId = req.params.id;
         const calificaciones = await Alumno.aggregate([
@@ -116,7 +116,7 @@ router.get("/alumnos/:id/calificaciones", async (req, res) => {
 });
 
 // Q4. Listar los docentes que imparten una materia específica.
-router.get("/materias/:materiaId/docentes", async (req, res) => {
+router.get("/materias/:materiaId/docentes", cache, async (req, res) => {
     try {
         const materiaId = req.params.materiaId;
         const docentes = await Docente.aggregate([
@@ -155,7 +155,7 @@ router.get("/materias/:materiaId/docentes", async (req, res) => {
 });
 
 // Q5. Listar los alumnos que han obtenido una calificación superior a 90 en una materia específica.
-router.get("/materias/:materiaId/alumnos/calificaciones", async (req, res) => {
+router.get("/materias/:materiaId/alumnos/calificaciones", cache, async (req, res) => {
     try {
         const materiaId = req.params.materiaId;
         const alumnos = await Alumno.aggregate([
@@ -200,7 +200,7 @@ router.get("/materias/:materiaId/alumnos/calificaciones", async (req, res) => {
 });
 
 // Q6. Listar los grupos que correspondan a una materia específica.
-router.get("/materias/:materiaId/grupos", async (req, res) => {
+router.get("/materias/:materiaId/grupos", cache, async (req, res) => {
     try {
         const materiaId = req.params.materiaId;
         const grupos = await Grupo.aggregate([
@@ -247,7 +247,7 @@ router.get("/materias/:materiaId/grupos", async (req, res) => {
 });
 
 // Q7. Listar las materias que cursa un alumno en específico (horario).
-router.get("/alumnos/:id/horario", async (req, res) => {
+router.get("/alumnos/:id/horario", cache, async (req, res) => {
     try {
         const alumnoId = req.params.id;
         const horario = await Alumno.aggregate([
@@ -303,7 +303,7 @@ router.get("/alumnos/:id/horario", async (req, res) => {
 });
 
 // Q8. Listar las materias que faltan por cursar a un alumno en específico.
-router.get("/alumnos/:id/materias/faltantes", async (req, res) => {
+router.get("/alumnos/:id/materias/faltantes", cache, async (req, res) => {
     try {
         const alumnoId = req.params.id;
         const materiasFaltantes = await Alumno.aggregate([
@@ -357,7 +357,7 @@ router.get("/alumnos/:id/materias/faltantes", async (req, res) => {
 });
 
 // Q9. Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias.
-router.get("/docentes/:id/materias", async (req, res) => {
+router.get("/docentes/:id/materias", cache, async (req, res) => {
     try {
         const docenteId = req.params.id;
         const materiasImpartidas = await Docente.aggregate([
