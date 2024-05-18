@@ -1,5 +1,5 @@
 # TecNM
-
+`
 6.1-Incluir estructura del proyecto
 /CASO
 |---/.vscode
@@ -24,6 +24,7 @@
 |---/package-lock.json
 |---/package.json
 |---/README.md
+`
 
 6.2-Modelado de datos (MongoDB, Redis)
 ## Mongo
@@ -117,9 +118,16 @@ Redis se utiliza para almacenar caché de peticiones y respuestas de la API. La 
       "query": "object",
       "params": "object"
   }
+  ```
+- response:<timestamp>: Almacena los detalles de la respuesta.
+  ```json
+  {
+    "data": "object",
+    "status": "number"
+  }
+  ```
 
-### Docente
-```json
+
 6.3-Tabla de endpoints
 6.4-Códigos y procedimientos documentados
 6.5-Dockerfile
