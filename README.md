@@ -1,6 +1,7 @@
 # TecNM
 1. Incluir estructura del proyecto.
-  ```json
+  ```js
+  /*
   /CASO
   |---/.vscode
   |---/node_modules
@@ -24,6 +25,7 @@
   |---/package-lock.json
   |---/package.json
   |---/README.md
+  */
   ```
 2. Modelado de datos (MongoDB, Redis).
   ## Mongo
