@@ -172,6 +172,7 @@
 | PUT    | /tecnm/plan-de-estudios/:id                        | Actualizar  |
 | DELETE | /tecnm/plan-de-estudios/:id                        | Eliminar    |
 ```
+  ### Descripción de las querys:
     - **Q1** Listar las materias que un alumno ha cursado.
     - **Q2** Listar los alumnos que están cursando una materia específica de un grupo específico.
     - **Q3** Listar las calificaciones de un alumno en todas sus materias cursadas.
