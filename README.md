@@ -113,11 +113,11 @@
 		> Almacena los detalles de la petición.
 		```json
 		{
-				"method": "string",
-				"path": "string",
-				"body": "object",
-				"query": "object",
-				"params": "object"
+			"method": "string",
+			"path": "string",
+			"body": "object",
+			"query": "object",
+			"params": "object"
 		}
 		```
 	- response:<timestamp>: 
