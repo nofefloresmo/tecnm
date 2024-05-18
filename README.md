@@ -1546,7 +1546,7 @@ db.plandeestudios.insertMany(
   }  
   ```
 # **EXTRA. auto-ReplicaSet**
-  > Archivos extra necesarios para el levantamiento automático del replica-set mediante el uso de un contenedor temporal intermediario.
+  > Archivos extra necesarios para el levantamiento automático del replica-set mediante el uso de un contenedor temporal intermediario (mongo-init-replica).
   ## init-replica.sh
   ```bash
 echo "Esperando a que MongoDB esté listo..."
