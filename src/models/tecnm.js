@@ -7,7 +7,7 @@ const AlumnoSchema = new mongoose.Schema({
     nombre: String,
     carrera: String,
     tecnologico: String,
-    planDeEstudios: String,
+    plandeestudios: String,
     expedienteAcademico: [
         {
             materia: String,
@@ -39,7 +39,7 @@ const MateriaSchema = new mongoose.Schema({
     nombre: String,
     carrera: String,
     descripcion: String,
-    planDeEstudios: String
+    plandeestudios: String
 });
 
 // Define el esquema para Grupos
@@ -65,7 +65,7 @@ const AulaSchema = new mongoose.Schema({
 });
 
 // Define el esquema para Planes de Estudio
-const PlanDeEstudiosSchema = new mongoose.Schema({
+const PlandeestudiosSchema = new mongoose.Schema({
     _id: String,
     carrera: String,
     materias: [String],
@@ -78,6 +78,6 @@ const Docente = mongoose.model("Docente", DocenteSchema);
 const Materia = mongoose.model("Materia", MateriaSchema);
 const Grupo = mongoose.model("Grupo", GrupoSchema);
 const Aula = mongoose.model("Aula", AulaSchema);
-const PlanDeEstudios = mongoose.model("PlanDeEstudios", PlanDeEstudiosSchema);
+const Plandeestudios = mongoose.model("plandeestudios", PlandeestudiosSchema);
 
-module.exports = { Alumno, Docente, Materia, Grupo, Aula, PlanDeEstudios };
+module.exports = { Alumno, Docente, Materia, Grupo, Aula, Plandeestudios };

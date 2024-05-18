@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use("/api", rutaTecnm);
+app.use("/tecnm", rutaTecnm);
 
 // Manejo de rutas incorrectas
 app.use((req, res, next) => {

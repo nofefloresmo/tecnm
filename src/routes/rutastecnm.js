@@ -1,7 +1,6 @@
-// src/api/routes/rutastecnm.js
+// src/routes/rutastecnm.js
 const express = require("express");
 const router = express.Router();
-//const cache = require("./cache");
 const logger = require("../middleware/logger");
 const tecnmController = require("../controllers/controladorestecnm");
 
@@ -31,5 +30,50 @@ router.get("/alumnos/:id/materias/faltantes", logger, tecnmController.listarMate
 
 // Q9. Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias.
 router.get("/docentes/:id/materias", logger, tecnmController.listarMateriasYAlumnosPorDocente);
+
+// CRUD Routes para alumnos
+router.get("/alumnos", logger, tecnmController.obtenerAlumnos);
+router.get("/alumnos/:id", logger, tecnmController.obtenerAlumno);
+router.post("/alumnos", logger, tecnmController.crearAlumno);
+router.put("/alumnos/:id", logger, tecnmController.actualizarAlumno);
+router.delete("/alumnos/:id", logger, tecnmController.eliminarAlumno);
+
+// CRUD Routes para docentes
+router.get("/docentes", logger, tecnmController.obtenerDocentes);
+router.get("/docentes/:id", logger, tecnmController.obtenerDocente);
+router.post("/docentes", logger, tecnmController.crearDocente);
+router.put("/docentes/:id", logger, tecnmController.actualizarDocente);
+router.delete("/docentes/:id", logger, tecnmController.eliminarDocente);
+
+// CRUD Routes para materias
+router.get("/materias", logger, tecnmController.obtenerMaterias);
+router.get("/materias/:id", logger, tecnmController.obtenerMateria);
+router.post("/materias", logger, tecnmController.crearMateria);
+router.put("/materias/:id", logger, tecnmController.actualizarMateria);
+router.delete("/materias/:id", logger, tecnmController.eliminarMateria);
+
+// CRUD Routes para grupos
+router.get("/grupos", logger, tecnmController.obtenerGrupos);
+router.get("/grupos/:id", logger, tecnmController.obtenerGrupo);
+router.post("/grupos", logger, tecnmController.crearGrupo);
+router.put("/grupos/:id", logger, tecnmController.actualizarGrupo);
+router.delete("/grupos/:id", logger, tecnmController.eliminarGrupo);
+
+// CRUD Routes para aulas
+router.get("/aulas", logger, tecnmController.obtenerAulas);
+router.get("/aulas/:id", logger, tecnmController.obtenerAula);
+router.post("/aulas", logger, tecnmController.crearAula);
+router.put("/aulas/:id", logger, tecnmController.actualizarAula);
+router.delete("/aulas/:id", logger, tecnmController.eliminarAula);
+
+// CRUD Routes para planes de estudios
+router.get("/planes-de-estudios", logger, tecnmController.obtenerPlanesDeEstudio);
+router.get("/planes-de-estudios/:id", logger, tecnmController.obtenerplandeestudios);
+router.post("/planes-de-estudios", logger, tecnmController.crearplandeestudios);
+router.put("/planes-de-estudios/:id", logger, tecnmController.actualizarplandeestudios);
+router.delete("/planes-de-estudios/:id", logger, tecnmController.eliminarplandeestudios);
+
+// RUTA para importación de datos de prueba
+router.post("/importar-datos", tecnmController.importarDatos);
 
 module.exports = router;
