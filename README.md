@@ -185,7 +185,7 @@
 - **Dockerfile.**
 - **docker-compose.yml.**
 - **Escenario de datos.**
-```json
+```js
 use('tecnm')
 db.alumnos.insertMany(
     [
