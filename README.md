@@ -130,19 +130,17 @@
 	```
 - **Tabla de endpoints.**
 	```markdown
-	### Endpoints
-
 	| Método | Endpoint                                           | Descripción |
 	|--------|----------------------------------------------------|-------------|
-	| GET    | /tecnm/alumnos/:alumnoId/materias                  | Q1 [^1]     |
-	| GET    | /tecnm/grupos/:grupoId/materias/:materiaId/alumnos | Q2 [^2]     |
-	| GET    | /tecnm/alumnos/:alumnoId/calificaciones            | Q3 [^3]     |
-	| GET    | /tecnm/materias/:materiaId/docentes                | Q4 [^4]     |
-	| GET    | /tecnm/materias/:materiaId/alumnos/calificaciones  | Q5 [^5]     |
-	| GET    | /tecnm/materias/:materiaId/grupos                  | Q6 [^6]     |
-	| GET    | /tecnm/alumnos/:alumnoId/horario                   | Q7 [^7]     |
-	| GET    | /tecnm/alumnos/:alumnoId/materias/faltantes        | Q8 [^8]     |
-	| GET    | /tecnm/docentes/:docenteId/materias                | Q9 [^9]     |
+	| GET    | /tecnm/alumnos/:alumnoId/materias                  | Q1          |
+	| GET    | /tecnm/grupos/:grupoId/materias/:materiaId/alumnos | Q2          |
+	| GET    | /tecnm/alumnos/:alumnoId/calificaciones            | Q3          |
+	| GET    | /tecnm/materias/:materiaId/docentes                | Q4          |
+	| GET    | /tecnm/materias/:materiaId/alumnos/calificaciones  | Q5          |
+	| GET    | /tecnm/materias/:materiaId/grupos                  | Q6          |
+	| GET    | /tecnm/alumnos/:alumnoId/horario                   | Q7          |
+	| GET    | /tecnm/alumnos/:alumnoId/materias/faltantes        | Q8          |
+	| GET    | /tecnm/docentes/:docenteId/materias                | Q9          |
 	| GET    | /tecnm/alumnos                                     | Todos       |
 	| GET    | /tecnm/alumnos/:id                                 | Uno         |
 	| POST   | /tecnm/alumnos                                     | Crear       |
@@ -173,15 +171,16 @@
 	| POST   | /tecnm/plan-de-estudios                            | Crear       |
 	| PUT    | /tecnm/plan-de-estudios/:id                        | Actualizar  |
 	| DELETE | /tecnm/plan-de-estudios/:id                        | Eliminar    |
-	[^1]: **Q1**
+	- **Q1**
 		> Listar las materias que un alumno ha cursado.
-	[^2]: **Q2**
+	- **Q2**
 		> Listar los alumnos que están cursando una materia específica de un grupo específico.
-	- [^3]: **Q3**
+	```
+	- **Q3**
 		> Listar las calificaciones de un alumno en todas sus materias cursadas.
-	- **Q4** [^4]:
+	- **Q4**
 		> Listar los docentes que imparten una materia específica.
-	- **Q5 [^5]:**
+	- **Q5**
 		> Listar los alumnos que han obtenido una calificación superior a 90 en una materia específica.
 	- **Q6**
 		> Listar los grupos que corresponden a una materia específica.
@@ -191,7 +190,6 @@
 		> Listar las materias que faltan por cursar a un alumno en específico.
 	- **Q9**
 		> Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias.
-	```
 - **Códigos y procedimientos documentados.**
 - **Dockerfile.**
 - **docker-compose.yml.**
