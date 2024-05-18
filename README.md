@@ -1,34 +1,29 @@
 # TecNM
-`
-6.1-Incluir estructura del proyecto
+1. - Incluir estructura del proyecto
 /CASO
-|---/.vscode
-|---/node_modules
-|---/src
-|   |---/controllers
-|   |   |---controladorestecnm.js
-|   |---/middleware
-|   |   |---logger.js
-|   |---/models
-|   |   |---tecnm.js
-|   |---/routes
-|   |   |---rutastecnm.js
-|   |   |---connection.js
-|   |---server.js
-|---/.dockerignore
-|---/.gitignore
-|---/docker-compose.yml
-|---/Dockerfile
-|---/Dockerfile.mongo-init
-|---/init-replica.sh
-|---/package-lock.json
-|---/package.json
-|---/README.md
-`
-...
-hola
-...
-6.2-Modelado de datos (MongoDB, Redis)
+├── .vscode
+├── node_modules
+├── src
+│ ├── controllers
+│ │ └── controladorestecnm.js
+│ ├── middleware
+│ │ └── logger.js
+│ ├── models
+│ │ └── tecnm.js
+│ ├── routes
+│ │ ├── rutastecnm.js
+│ │ └── connection.js
+│ └── server.js
+├── .dockerignore
+├── .gitignore
+├── docker-compose.yml
+├── Dockerfile
+├── Dockerfile.mongo-init
+├── init-replica.sh
+├── package-lock.json
+├── package.json
+└── README.md
+2. - Modelado de datos (MongoDB, Redis)
 ## Mongo
 #### Alumnos
 ```json
@@ -109,9 +104,9 @@ hola
 }
 ```
 ## Redis
-Redis se utiliza para almacenar caché de peticiones y respuestas de la API. La estructura de los datos en Redis es la siguiente:
-
-- request:<timestamp>: Almacena los detalles de la petición.
+> Redis se utiliza para almacenar caché de peticiones y respuestas de la API. La estructura de los datos en Redis es la siguiente:.
+- request:<timestamp>: 
+  > Almacena los detalles de la petición.
   ```json
   {
       "method": "string",
@@ -121,18 +116,17 @@ Redis se utiliza para almacenar caché de peticiones y respuestas de la API. La 
       "params": "object"
   }
   ```
-- response:<timestamp>: Almacena los detalles de la respuesta.
+- response:<timestamp>: 
+  > Almacena los detalles de la respuesta.
   ```json
   {
     "data": "object",
     "status": "number"
   }
   ```
-
-
-6.3-Tabla de endpoints
-6.4-Códigos y procedimientos documentados
-6.5-Dockerfile
-6.6-docker-compose.yml
-6.7-Escenario de datos
-6.8-JSON Postman para probar todas las querys de la colección
+3. - Tabla de endpoints
+4. - Códigos y procedimientos documentados
+5. - Dockerfile
+6. - docker-compose.yml
+7. - Escenario de datos
+8. - JSON Postman para probar todas las querys de la colección
