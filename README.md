@@ -257,7 +257,7 @@ networks:
 red02:
 ```
 # **Escenario de datos.**
-```js
+  ```js
 use('tecnm')
 db.alumnos.insertMany(
     [
