@@ -128,7 +128,7 @@
     "status": "number"
   }
   ```
-# **Tabla de endpoints.**
+# **Tabla de endpoints**
   ```markdown
 | Método | Endpoint                                           | Descripción |
 |--------|----------------------------------------------------|-------------|
