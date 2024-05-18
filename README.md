@@ -174,15 +174,15 @@
 	| PUT    | /tecnm/plan-de-estudios/:id                        | Actualizar  |
 	| DELETE | /tecnm/plan-de-estudios/:id                        | Eliminar    |
 	```
-	[^1] **Q1**
+	[^1]: **Q1**
 		> Listar las materias que un alumno ha cursado.
-	[^2] **Q2**
+	[^2]: **Q2**
 		> Listar los alumnos que están cursando una materia específica de un grupo específico.
-	- [^3] **Q3**
+	- [^3]: **Q3**
 		> Listar las calificaciones de un alumno en todas sus materias cursadas.
-	- **Q4** [^4]
+	- **Q4** [^4]:
 		> Listar los docentes que imparten una materia específica.
-	- **Q5 [^5]**
+	- **Q5 [^5]:**
 		> Listar los alumnos que han obtenido una calificación superior a 90 en una materia específica.
 	- **Q6**
 		> Listar los grupos que corresponden a una materia específica.
