@@ -25,7 +25,9 @@
 |---/package.json
 |---/README.md
 `
-
+...
+hola
+...
 6.2-Modelado de datos (MongoDB, Redis)
 ## Mongo
 #### Alumnos
