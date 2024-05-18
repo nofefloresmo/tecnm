@@ -128,7 +128,7 @@
   }
   ```
 # **Tabla de endpoints.**
-```markdown
+  ```markdown
 | Método | Endpoint                                           | Descripción |
 |--------|----------------------------------------------------|-------------|
 | GET    | /tecnm/alumnos/:alumnoId/materias                  | Q1          |
@@ -182,7 +182,7 @@
     - **Q9** Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias.
 # **Códigos y procedimientos documentados.**
 # **Dockerfile.**
-```dockerfile
+  ```dockerfile
 FROM node
 WORKDIR /app
 COPY package*.json ./
@@ -192,7 +192,7 @@ EXPOSE 3000
 CMD ["npm", "start"]
 ```
 # **docker-compose.yml.**
-```yaml
+  ```yaml
 version: '3.8'
 
 services:
