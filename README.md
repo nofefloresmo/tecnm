@@ -128,49 +128,49 @@
   }
   ```
 # **Tabla de endpoints.**
-    ```markdown
-    | Método | Endpoint                                           | Descripción |
-    |--------|----------------------------------------------------|-------------|
-    | GET    | /tecnm/alumnos/:alumnoId/materias                  | Q1          |
-    | GET    | /tecnm/grupos/:grupoId/materias/:materiaId/alumnos | Q2          |
-    | GET    | /tecnm/alumnos/:alumnoId/calificaciones            | Q3          |
-    | GET    | /tecnm/materias/:materiaId/docentes                | Q4          |
-    | GET    | /tecnm/materias/:materiaId/alumnos/calificaciones  | Q5          |
-    | GET    | /tecnm/materias/:materiaId/grupos                  | Q6          |
-    | GET    | /tecnm/alumnos/:alumnoId/horario                   | Q7          |
-    | GET    | /tecnm/alumnos/:alumnoId/materias/faltantes        | Q8          |
-    | GET    | /tecnm/docentes/:docenteId/materias                | Q9          |
-    | GET    | /tecnm/alumnos                                     | Todos       |
-    | GET    | /tecnm/alumnos/:id                                 | Uno         |
-    | POST   | /tecnm/alumnos                                     | Crear       |
-    | PUT    | /tecnm/alumnos/:id                                 | Actualizar  |
-    | DELETE | /tecnm/alumnos/:id                                 | Eliminar    |
-    | GET    | /tecnm/docentes                                    | Todos       |
-    | GET    | /tecnm/docentes/:id                                | Uno         |
-    | POST   | /tecnm/docentes                                    | Crear       |
-    | PUT    | /tecnm/docentes/:id                                | Actualizar  |
-    | DELETE | /tecnm/docentes/:id                                | Eliminar    |
-    | GET    | /tecnm/materias                                    | Todos       |
-    | GET    | /tecnm/materias/:id                                | Uno         |
-    | POST   | /tecnm/materias                                    | Crear       |
-    | PUT    | /tecnm/materias/:id                                | Actualizar  |
-    | DELETE | /tecnm/materias/:id                                | Eliminar    |
-    | GET    | /tecnm/grupos                                      | Todos       |
-    | GET    | /tecnm/grupos/:id                                  | Uno         |
-    | POST   | /tecnm/grupos                                      | Crear       |
-    | PUT    | /tecnm/grupos/:id                                  | Actualizar  |
-    | DELETE | /tecnm/grupos/:id                                  | Eliminar    |
-    | GET    | /tecnm/aulas                                       | Todos       |
-    | GET    | /tecnm/aulas/:id                                   | Uno         |
-    | POST   | /tecnm/aulas                                       | Crear       |
-    | PUT    | /tecnm/aulas/:id                                   | Actualizar  |
-    | DELETE | /tecnm/aulas/:id                                   | Eliminar    |
-    | GET    | /tecnm/plan-de-estudios                            | Todos       |
-    | GET    | /tecnm/plan-de-estudios/:id                        | Uno         |
-    | POST   | /tecnm/plan-de-estudios                            | Crear       |
-    | PUT    | /tecnm/plan-de-estudios/:id                        | Actualizar  |
-    | DELETE | /tecnm/plan-de-estudios/:id                        | Eliminar    |
-    ```
+```markdown
+| Método | Endpoint                                           | Descripción |
+|--------|----------------------------------------------------|-------------|
+| GET    | /tecnm/alumnos/:alumnoId/materias                  | Q1          |
+| GET    | /tecnm/grupos/:grupoId/materias/:materiaId/alumnos | Q2          |
+| GET    | /tecnm/alumnos/:alumnoId/calificaciones            | Q3          |
+| GET    | /tecnm/materias/:materiaId/docentes                | Q4          |
+| GET    | /tecnm/materias/:materiaId/alumnos/calificaciones  | Q5          |
+| GET    | /tecnm/materias/:materiaId/grupos                  | Q6          |
+| GET    | /tecnm/alumnos/:alumnoId/horario                   | Q7          |
+| GET    | /tecnm/alumnos/:alumnoId/materias/faltantes        | Q8          |
+| GET    | /tecnm/docentes/:docenteId/materias                | Q9          |
+| GET    | /tecnm/alumnos                                     | Todos       |
+| GET    | /tecnm/alumnos/:id                                 | Uno         |
+| POST   | /tecnm/alumnos                                     | Crear       |
+| PUT    | /tecnm/alumnos/:id                                 | Actualizar  |
+| DELETE | /tecnm/alumnos/:id                                 | Eliminar    |
+| GET    | /tecnm/docentes                                    | Todos       |
+| GET    | /tecnm/docentes/:id                                | Uno         |
+| POST   | /tecnm/docentes                                    | Crear       |
+| PUT    | /tecnm/docentes/:id                                | Actualizar  |
+| DELETE | /tecnm/docentes/:id                                | Eliminar    |
+| GET    | /tecnm/materias                                    | Todos       |
+| GET    | /tecnm/materias/:id                                | Uno         |
+| POST   | /tecnm/materias                                    | Crear       |
+| PUT    | /tecnm/materias/:id                                | Actualizar  |
+| DELETE | /tecnm/materias/:id                                | Eliminar    |
+| GET    | /tecnm/grupos                                      | Todos       |
+| GET    | /tecnm/grupos/:id                                  | Uno         |
+| POST   | /tecnm/grupos                                      | Crear       |
+| PUT    | /tecnm/grupos/:id                                  | Actualizar  |
+| DELETE | /tecnm/grupos/:id                                  | Eliminar    |
+| GET    | /tecnm/aulas                                       | Todos       |
+| GET    | /tecnm/aulas/:id                                   | Uno         |
+| POST   | /tecnm/aulas                                       | Crear       |
+| PUT    | /tecnm/aulas/:id                                   | Actualizar  |
+| DELETE | /tecnm/aulas/:id                                   | Eliminar    |
+| GET    | /tecnm/plan-de-estudios                            | Todos       |
+| GET    | /tecnm/plan-de-estudios/:id                        | Uno         |
+| POST   | /tecnm/plan-de-estudios                            | Crear       |
+| PUT    | /tecnm/plan-de-estudios/:id                        | Actualizar  |
+| DELETE | /tecnm/plan-de-estudios/:id                        | Eliminar    |
+```
     - **Q1** Listar las materias que un alumno ha cursado.
     - **Q2** Listar los alumnos que están cursando una materia específica de un grupo específico.
     - **Q3** Listar las calificaciones de un alumno en todas sus materias cursadas.
