@@ -128,7 +128,7 @@
 			"status": "number"
 	}
 	```
-- **Tabla de endpoints.**
+- **Tabla de endpoints.** [^1]
 	```markdown
 	### Endpoints
 
