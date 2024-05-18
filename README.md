@@ -1569,8 +1569,8 @@ db.plandeestudios.insertMany(
     ```
   ## Dockerfile.mongo-init
     ```dockerfile
-    FROM mongo:latest
-    COPY init-replica.sh /init-replica.sh
-    RUN chmod +x /init-replica.sh
-    CMD [ "bash", "-c", "/init-replica.sh & exec mongod --replSet replica01" ]
-    ```
+  FROM mongo:latest
+  COPY init-replica.sh /init-replica.sh
+  RUN chmod +x /init-replica.sh
+  CMD [ "bash", "-c", "/init-replica.sh & exec mongod --replSet replica01" ]
+  ```
