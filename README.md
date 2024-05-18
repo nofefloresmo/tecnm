@@ -1,5 +1,5 @@
 # TecNM
-1. - Incluir estructura del proyecto
+1. Incluir estructura del proyecto.
 /CASO
 ├── .vscode
 ├── node_modules
@@ -23,7 +23,7 @@
 ├── package-lock.json
 ├── package.json
 └── README.md
-2. - Modelado de datos (MongoDB, Redis)
+2. Modelado de datos (MongoDB, Redis).
 ## Mongo
 #### Alumnos
 ```json
@@ -104,7 +104,7 @@
 }
 ```
 ## Redis
-> Redis se utiliza para almacenar caché de peticiones y respuestas de la API. La estructura de los datos en Redis es la siguiente:.
+> Redis se utiliza para almacenar caché de peticiones y respuestas de la API. La estructura de los datos en Redis es la siguiente:
 - request:<timestamp>: 
   > Almacena los detalles de la petición.
   ```json
@@ -124,9 +124,9 @@
     "status": "number"
   }
   ```
-3. - Tabla de endpoints
-4. - Códigos y procedimientos documentados
-5. - Dockerfile
-6. - docker-compose.yml
-7. - Escenario de datos
-8. - JSON Postman para probar todas las querys de la colección
+3. Tabla de endpoints.
+4. Códigos y procedimientos documentados.
+5. Dockerfile.
+6. docker-compose.yml.
+7. Escenario de datos.
+8. JSON Postman para probar todas las querys de la colección.
