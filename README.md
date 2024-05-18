@@ -1,4 +1,5 @@
-# **Incluir estructura del proyecto.**
+# **TECNM**
+# **Incluir estructura del proyecto**
   ```js
   /*
   /CASO
@@ -26,7 +27,7 @@
   |---/README.md
   */
   ```
-# **Modelado de datos (MongoDB, Redis).**
+# **Modelado de datos (MongoDB, Redis)**
   ## Mongo
   ### Alumnos
   ```json
@@ -180,8 +181,8 @@
     - **Q7** Listar las materias que cursa un alumno en específico (horario).
     - **Q8** Listar las materias que faltan por cursar a un alumno en específico.
     - **Q9** Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias.
-# **Códigos y procedimientos documentados.**
-# **Dockerfile.**
+# **Códigos y procedimientos documentados**
+# **Dockerfile**
   ```dockerfile
 FROM node
 WORKDIR /app
@@ -191,7 +192,7 @@ COPY . .
 EXPOSE 3000
 CMD ["npm", "start"]
 ```
-# **docker-compose.yml.**
+# **docker-compose.yml**
   ```yaml
 version: '3.8'
 
@@ -256,7 +257,7 @@ mongo-init-replica:
 networks:
 red02:
 ```
-# **Escenario de datos.**
+# **Escenario de datos**
   ```js
 use('tecnm')
 db.alumnos.insertMany(
@@ -541,7 +542,7 @@ db.plandeestudios.insertMany(
     ]
 )
 ```
-# **JSON Postman para probar todas las querys de la colección.**
+# **JSON Postman para probar todas las querys de la colección**
   ```json
   {
     "info": {
