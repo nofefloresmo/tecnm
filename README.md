@@ -109,25 +109,25 @@
     ```
 	## Redis
 	> Redis se utiliza para almacenar caché de peticiones y respuestas de la API. La estructura de los datos en Redis es la siguiente:
-	- request:<timestamp>: 
-		> Almacena los detalles de la petición.
-		```json
-		{
+	### request:<timestamp>: 
+	> Almacena los detalles de la petición.
+	```json
+	{
 			"method": "string",
 			"path": "string",
 			"body": "object",
 			"query": "object",
 			"params": "object"
-		}
-		```
-	- response:<timestamp>: 
-		> Almacena los detalles de la respuesta.
-		```json
-		{
+	}
+	```
+	### response:<timestamp>: 
+	> Almacena los detalles de la respuesta.
+	```json
+	{
 			"data": "object",
 			"status": "number"
-		}
-		```
+	}
+	```
 - Tabla de endpoints.
 - Códigos y procedimientos documentados.
 - Dockerfile.
