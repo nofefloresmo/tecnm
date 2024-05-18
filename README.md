@@ -182,80 +182,80 @@
     - **Q9** Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias.
 # **Códigos y procedimientos documentados.**
 # **Dockerfile.**
-    ```dockerfile
-    FROM node
-    WORKDIR /app
-    COPY package*.json ./
-    RUN npm install
-    COPY . .
-    EXPOSE 3000
-    CMD ["npm", "start"]
-    ```
+```dockerfile
+FROM node
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]
+```
 # **docker-compose.yml.**
-    ```yaml
-    version: '3.8'
+```yaml
+version: '3.8'
 
-    services:
-    app:
-        build: .
-        ports:
-        - "3000:3000"
-        depends_on:
-        - redis02
-        - mongo01
-        - mongo02
-        - mongo03
-        - mongo-init-replica
-        networks:
-        - red02
-        volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
-
-    redis02:
-        image: redis
-        ports:
-        - "6379:6379"
-        networks:
-        - red02
-
-    mongo01:
-        image: mongo:latest
-        command: [ "mongod", "--replSet", "replica01" ]
-        ports:
-        - "27020:27017"
-        networks:
-        - red02
-
-    mongo02:
-        image: mongo:latest
-        command: [ "mongod", "--replSet", "replica01" ]
-        ports:
-        - "27021:27017"
-        networks:
-        - red02
-
-    mongo03:
-        image: mongo:latest
-        command: [ "mongod", "--replSet", "replica01" ]
-        ports:
-        - "27022:27017"
-        networks:
-        - red02
-
-    mongo-init-replica:
-        build:
-        context: .
-        dockerfile: Dockerfile.mongo-init
-        depends_on:
-        - mongo01
-        - mongo02
-        - mongo03
-        networks:
-        - red02
-
+services:
+app:
+    build: .
+    ports:
+    - "3000:3000"
+    depends_on:
+    - redis02
+    - mongo01
+    - mongo02
+    - mongo03
+    - mongo-init-replica
     networks:
-    red02:
-    ```
+    - red02
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+
+redis02:
+    image: redis
+    ports:
+    - "6379:6379"
+    networks:
+    - red02
+
+mongo01:
+    image: mongo:latest
+    command: [ "mongod", "--replSet", "replica01" ]
+    ports:
+    - "27020:27017"
+    networks:
+    - red02
+
+mongo02:
+    image: mongo:latest
+    command: [ "mongod", "--replSet", "replica01" ]
+    ports:
+    - "27021:27017"
+    networks:
+    - red02
+
+mongo03:
+    image: mongo:latest
+    command: [ "mongod", "--replSet", "replica01" ]
+    ports:
+    - "27022:27017"
+    networks:
+    - red02
+
+mongo-init-replica:
+    build:
+    context: .
+    dockerfile: Dockerfile.mongo-init
+    depends_on:
+    - mongo01
+    - mongo02
+    - mongo03
+    networks:
+    - red02
+
+networks:
+red02:
+```
 # **Escenario de datos.**
     ```js
     use('tecnm')
