@@ -113,19 +113,19 @@
 	> Almacena los detalles de la petición.
 	```json
 	{
-		"method": "string",
-		"path": "string",
-		"body": "object",
-		"query": "object",
-		"params": "object"
+	    "method": "string",
+	    "path": "string",
+	    "body": "object",
+	    "query": "object",
+	    "params": "object"
 	}
 	```
 	### response:<timestamp>: 
 	> Almacena los detalles de la respuesta.
 	```json
 	{
-		"data": "object",
-		"status": "number"
+	    "data": "object",
+	    "status": "number"
 	}
 	```
 - **Tabla de endpoints.**
