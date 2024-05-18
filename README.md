@@ -1,5 +1,5 @@
 # **TECNM**
-# **Incluir estructura del proyecto**
+# **1. Incluir estructura del proyecto**
   ```js
   /*
   /CASO
@@ -27,7 +27,7 @@
   |---/README.md
   */
   ```
-# **Modelado de datos (MongoDB, Redis)**
+# **2. Modelado de datos (MongoDB, Redis)**
   ## Mongo
   ### Alumnos
   ```json
@@ -128,7 +128,7 @@
     "status": "number"
   }
   ```
-# **Tabla de endpoints**
+# **3. Tabla de endpoints**
   ```markdown
 | Método | Endpoint                                           | Descripción |
 |--------|----------------------------------------------------|-------------|
@@ -182,8 +182,8 @@
   - **Q7** Listar las materias que cursa un alumno en específico (horario).
   - **Q8** Listar las materias que faltan por cursar a un alumno en específico.
   - **Q9** Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias.
-# **Códigos y procedimientos documentados**
-# **Dockerfile**
+# **4. Códigos y procedimientos documentados**
+# **5. Dockerfile**
   ```dockerfile
 FROM node
 WORKDIR /app
@@ -193,7 +193,7 @@ COPY . .
 EXPOSE 3000
 CMD ["npm", "start"]
 ```
-# **docker-compose.yml**
+# **6. docker-compose.yml**
   ```yaml
 version: '3.8'
 
@@ -258,7 +258,7 @@ mongo-init-replica:
 networks:
 red02:
 ```
-# **Escenario de datos**
+# **7. Escenario de datos**
   ```js
 use('tecnm')
 db.alumnos.insertMany(
@@ -543,7 +543,7 @@ db.plandeestudios.insertMany(
     ]
 )
 ```
-# **JSON Postman para probar todas las querys de la colección**
+# **8. JSON Postman para probar todas las querys de la colección**
   ```json
   {
     "info": {
@@ -1545,3 +1545,34 @@ db.plandeestudios.insertMany(
     ]
   }  
   ```
+# **EXTRA. auto-ReplicaSet**
+  > Archivos extra necesarios para el levantamiento automático del replica-set mediante el uso de un contenedor temporal intermediario.
+  ## init-replica.sh
+    ```bash
+    #!/bin/bash
+    echo "Esperando a que MongoDB esté listo..."
+    until mongosh --host mongo01 --eval "print(\"conexion exitosa\")"; do
+      sleep 5
+    done
+    echo "Inicializando el replicaset..."
+    mongosh --host mongo01 <<EOF
+    rs.initiate({
+      _id: 'replica01',
+      members: [
+        { _id: 0, host: 'mongo01:27017' },
+        { _id: 1, host: 'mongo02:27017' },
+        { _id: 2, host: 'mongo03:27017' }
+      ]
+    })
+    EOF
+    echo "Replicaset inicializado."
+    # Indica que el script ha terminado su trabajo y finaliza.
+    exit 0
+    ```
+  ## Dockerfile.mongo-init
+    ```dockerfile
+    FROM mongo:latest
+    COPY init-replica.sh /init-replica.sh
+    RUN chmod +x /init-replica.sh
+    CMD [ "bash", "-c", "/init-replica.sh & exec mongod --replSet replica01" ]
+    ```
