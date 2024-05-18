@@ -193,6 +193,70 @@
 	CMD ["npm", "start"]
 	```
 - **docker-compose.yml.**
+	```yaml
+	version: '3.8'
+
+	services:
+	app:
+		build: .
+		ports:
+		- "3000:3000"
+		depends_on:
+		- redis02
+		- mongo01
+		- mongo02
+		- mongo03
+		- mongo-init-replica
+		networks:
+		- red02
+		volumes:
+		- /var/run/docker.sock:/var/run/docker.sock
+
+	redis02:
+		image: redis
+		ports:
+		- "6379:6379"
+		networks:
+		- red02
+
+	mongo01:
+		image: mongo:latest
+		command: [ "mongod", "--replSet", "replica01" ]
+		ports:
+		- "27020:27017"
+		networks:
+		- red02
+
+	mongo02:
+		image: mongo:latest
+		command: [ "mongod", "--replSet", "replica01" ]
+		ports:
+		- "27021:27017"
+		networks:
+		- red02
+
+	mongo03:
+		image: mongo:latest
+		command: [ "mongod", "--replSet", "replica01" ]
+		ports:
+		- "27022:27017"
+		networks:
+		- red02
+
+	mongo-init-replica:
+		build:
+		context: .
+		dockerfile: Dockerfile.mongo-init
+		depends_on:
+		- mongo01
+		- mongo02
+		- mongo03
+		networks:
+		- red02
+
+	networks:
+	red02:
+	```
 - **Escenario de datos.**
 	```js
 	use('tecnm')
@@ -479,3 +543,1004 @@
 	)
 	```
 - **JSON Postman para probar todas las querys de la colección.**
+	```json
+	{
+		"info": {
+			"_postman_id": "34d735d8-9f57-444e-b2f8-92ba991f365c",
+			"name": "TECNM",
+			"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+			"_exporter_id": "28686888"
+		},
+		"item": [
+			{
+				"name": "IMPORT ESCENARIO",
+				"item": [
+					{
+						"name": "importar datos de prueba",
+						"request": {
+							"method": "POST",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/importar-datos",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"importar-datos"
+								]
+							}
+						},
+						"response": []
+					}
+				],
+				"description": "Importación de datos de prueba para el modelo \"tecnm\" para la colección de peticiones."
+			},
+			{
+				"name": "QUERIES",
+				"item": [
+					{
+						"name": "Q1. Listar las materias que un alumno ha cursado",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/alumnos/CURP001/materias",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"alumnos",
+									"CURP001",
+									"materias"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Q2. Listar los alumnos que están cursando una materia específica de un grupo específico",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/grupos/G001/materias/MAT001/alumnos",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"grupos",
+									"G001",
+									"materias",
+									"MAT001",
+									"alumnos"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Q3. Listar las calificaciones de un alumno en todas sus materias cursadas",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/alumnos/CURP001/calificaciones",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"alumnos",
+									"CURP001",
+									"calificaciones"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Q4. Listar los docentes que imparten una materia específica",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/materias/MAT001/docentes",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"materias",
+									"MAT001",
+									"docentes"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Q5. Listar los alumnos que han obtenido una calificación superior a 90 en una materia específica",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/materias/MAT001/alumnos/calificaciones",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"materias",
+									"MAT001",
+									"alumnos",
+									"calificaciones"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Q6. Listar los grupos que correspondan a una materia específica",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/materias/MAT001/grupos",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"materias",
+									"MAT001",
+									"grupos"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Q7. Listar las materias que cursa un alumno en específico (horario)",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/alumnos/CURP001/horario",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"alumnos",
+									"CURP001",
+									"horario"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Q8. Listar las materias que faltan por cursar a un alumno en específico",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/alumnos/CURP001/materias/faltantes",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"alumnos",
+									"CURP001",
+									"materias",
+									"faltantes"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Q9. Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/docentes/RFC001/materias",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"docentes",
+									"RFC001",
+									"materias"
+								]
+							}
+						},
+						"response": []
+					}
+				]
+			},
+			{
+				"name": "ALUMNO (CRUD)",
+				"item": [
+					{
+						"name": "Obtener Alumnos",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/alumnos",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"alumnos"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Obtener Alumno",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/alumnos/CURP001",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"alumnos",
+									"CURP001"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Crear Alumno",
+						"request": {
+							"method": "POST",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"_id\": \"CURP006\",\n    \"nctrl\": \"20180006\",\n    \"nombre\": \"Luis Hernández\",\n    \"carrera\": \"Ingeniería en Sistemas Computacionales\",\n    \"tecnologico\": \"TecNM Campus Monterrey\",\n    \"planDeEstudios\": \"Plan001\",\n    \"expedienteAcademico\": [\n        { \"materia\": \"MAT001\", \"calificacion\": 90, \"semestre\": \"2020-1\" }\n    ],\n    \"horario\": [\"G001\"]\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/alumnos",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"alumnos"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Actualizar Alumno",
+						"request": {
+							"method": "PUT",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"nombre\": \"Luis Hernández Updated\",\n    \"carrera\": \"Ingeniería en Sistemas Computacionales\",\n    \"tecnologico\": \"TecNM Campus Monterrey Updated\"\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/alumnos/CURP006",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"alumnos",
+									"CURP006"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Eliminar Alumno",
+						"request": {
+							"method": "DELETE",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/alumnos/CURP006",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"alumnos",
+									"CURP006"
+								]
+							}
+						},
+						"response": []
+					}
+				]
+			},
+			{
+				"name": "DOCENTE (CRUD)",
+				"item": [
+					{
+						"name": "Obtener Docentes",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/docentes",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"docentes"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Obtener Docente",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/docentes/RFC001",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"docentes",
+									"RFC001"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Crear Docente",
+						"request": {
+							"method": "POST",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"_id\": \"RFC006\",\n    \"nombre\": \"Dr. Luis Ramírez\",\n    \"carrera\": \"Ingeniería en Sistemas Computacionales\",\n    \"tecnologico\": \"TecNM Campus Monterrey\",\n    \"materiasImpartidas\": [\n        { \"materia\": \"MAT001\", \"grupo\": \"G001\", \"semestre\": \"2023-1\" }\n    ]\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/docentes",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"docentes"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Actualizar Docente",
+						"request": {
+							"method": "PUT",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"nombre\": \"Dr. Luis Ramírez Updated\",\n    \"carrera\": \"Ingeniería en Sistemas Computacionales Updated\",\n    \"tecnologico\": \"TecNM Campus Monterrey Updated\"\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/docentes/RFC006",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"docentes",
+									"RFC006"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Eliminar Docente",
+						"request": {
+							"method": "DELETE",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/docentes/RFC006",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"docentes",
+									"RFC006"
+								]
+							}
+						},
+						"response": []
+					}
+				]
+			},
+			{
+				"name": "MATERIA (CRUD)",
+				"item": [
+					{
+						"name": "Obtener Materias",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/materias",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"materias"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Obtener Materia",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/materias/MAT001",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"materias",
+									"MAT001"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Crear Materia",
+						"request": {
+							"method": "POST",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"_id\": \"MAT006\",\n    \"nombre\": \"Cálculo Avanzado\",\n    \"carrera\": \"Ingeniería en Sistemas Computacionales\",\n    \"descripcion\": \"Estudio de funciones avanzadas y sus aplicaciones\",\n    \"planDeEstudios\": \"Plan001\"\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/materias",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"materias"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Actualizar Materia",
+						"request": {
+							"method": "PUT",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"nombre\": \"Cálculo Avanzado Updated\",\n    \"carrera\": \"Ingeniería en Sistemas Computacionales\",\n    \"descripcion\": \"Estudio de funciones avanzadas y sus aplicaciones Updated\",\n    \"planDeEstudios\": \"Plan001\"\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/materias/MAT006",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"materias",
+									"MAT006"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Eliminar Materia",
+						"request": {
+							"method": "DELETE",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/materias/MAT006",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"materias",
+									"MAT006"
+								]
+							}
+						},
+						"response": []
+					}
+				]
+			},
+			{
+				"name": "GRUPO (CRUD)",
+				"item": [
+					{
+						"name": "Obtener Grupos",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/grupos",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"grupos"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Obtener Grupo",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/grupos/G001",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"grupos",
+									"G001"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Crear Grupo",
+						"request": {
+							"method": "POST",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"_id\": \"G008\",\n    \"materia\": \"MAT002\",\n    \"docente\": \"RFC002\",\n    \"estudiantes\": [\"CURP001\", \"CURP002\"],\n    \"aula\": \"A001\",\n    \"horario\": { \"dia\": \"Lunes\", \"horaInicio\": \"12:00\", \"horaFin\": \"13:00\" }\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/grupos",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"grupos"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Actualizar Grupo",
+						"request": {
+							"method": "PUT",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"materia\": \"MAT004\",\n    \"docente\": \"RFC001\",\n    \"estudiantes\": [\"CURP003\", \"CURP004\"],\n    \"aula\": \"A001\",\n    \"horario\": { \"dia\": \"Martes\", \"horaInicio\": \"10:00\", \"horaFin\": \"12:00\" }\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/grupos/G008",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"grupos",
+									"G008"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Eliminar Grupo",
+						"request": {
+							"method": "DELETE",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/grupos/G008",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"grupos",
+									"G008"
+								]
+							}
+						},
+						"response": []
+					}
+				]
+			},
+			{
+				"name": "AULA (CRUD)",
+				"item": [
+					{
+						"name": "Obtener Aulas",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/aulas",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"aulas"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Obtener Aula",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/aulas/A001",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"aulas",
+									"A001"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Crear Aula",
+						"request": {
+							"method": "POST",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"_id\": \"A006\",\n    \"edificio\": \"Edificio Nuevo\",\n    \"gruposAtendidos\": [\"G001\", \"G002\"],\n    \"descripcionEquipamiento\": \"Pizarrón digital, Wi-Fi, aire acondicionado\"\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/aulas",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"aulas"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Actualizar Aula",
+						"request": {
+							"method": "PUT",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"edificio\": \"Edificio Nuevo Updated\",\n    \"gruposAtendidos\": [\"G003\", \"G004\"],\n    \"descripcionEquipamiento\": \"Pizarrón digital, Wi-Fi, aire acondicionado Updated\"\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/aulas/A006",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"aulas",
+									"A006"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Eliminar Aula",
+						"request": {
+							"method": "DELETE",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/aulas/A006",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"aulas",
+									"A006"
+								]
+							}
+						},
+						"response": []
+					}
+				]
+			},
+			{
+				"name": "PLAN DE ESTUDIOS (CRUD)",
+				"item": [
+					{
+						"name": "Obtener Planes de Estudio",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/planes-de-estudios",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"planes-de-estudios"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Obtener Plan de Estudio",
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/planes-de-estudios/Plan001",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"planes-de-estudios",
+									"Plan001"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Crear Plan de Estudio",
+						"request": {
+							"method": "POST",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"_id\": \"Plan004\",\n    \"carrera\": \"Ingeniería Química\",\n    \"materias\": [\"MAT001\", \"CIV001\", \"MEC001\", \"ELE001\"],\n    \"totalCreditos\": 200\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/planes-de-estudios",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"planes-de-estudios"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Actualizar Plan de Estudio",
+						"request": {
+							"method": "PUT",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{\n    \"carrera\": \"Ingeniería Química\",\n    \"materias\": [\"MAT001\", \"CIV001\", \"MEC001\", \"ELE001\"],\n    \"totalCreditos\": 220\n}"
+							},
+							"url": {
+								"raw": "http://localhost:3000/tecnm/planes-de-estudios/Plan004",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"planes-de-estudios",
+									"Plan004"
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "Eliminar Plan de Estudio",
+						"request": {
+							"method": "DELETE",
+							"header": [],
+							"url": {
+								"raw": "http://localhost:3000/tecnm/planes-de-estudios/Plan004",
+								"protocol": "http",
+								"host": [
+									"localhost"
+								],
+								"port": "3000",
+								"path": [
+									"tecnm",
+									"planes-de-estudios",
+									"Plan004"
+								]
+							}
+						},
+						"response": []
+					}
+				]
+			}
+		]
+	}
+	```
