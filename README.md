@@ -128,7 +128,7 @@
 			"status": "number"
 	}
 	```
-- **Tabla de endpoints.** [^1]
+- **Tabla de endpoints.**
 	```markdown
 	### Endpoints
 
@@ -173,7 +173,6 @@
 	| POST   | /tecnm/plan-de-estudios                            | Crear       |
 	| PUT    | /tecnm/plan-de-estudios/:id                        | Actualizar  |
 	| DELETE | /tecnm/plan-de-estudios/:id                        | Eliminar    |
-	```
 	[^1]: **Q1**
 		> Listar las materias que un alumno ha cursado.
 	[^2]: **Q2**
@@ -192,6 +191,7 @@
 		> Listar las materias que faltan por cursar a un alumno en específico.
 	- **Q9**
 		> Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias.
+	```
 - **Códigos y procedimientos documentados.**
 - **Dockerfile.**
 - **docker-compose.yml.**
