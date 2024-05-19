@@ -218,7 +218,7 @@
           }
 
           res.json(alumno);
-      } catch (error) {
+        } catch (error) {
           console.error("Error al obtener las materias del alumno:", error);
           res.status(500).send("Hubo un error al obtener las materias del alumno");
       }
@@ -229,62 +229,135 @@
   const listarAlumnosPorMateriaYGrupo = async (req, res) => {
       // Descripción de la función...
   };
-
   const listarCalificacionesPorAlumno = async (req, res) => {
       // Descripción de la función...
   };
-
   const listarDocentesPorMateria = async (req, res) => {
       // Descripción de la función...
   };
-
   const listarAlumnosConCalificacionSuperior = async (req, res) => {
       // Descripción de la función...
   };
-
   const listarGruposPorMateria = async (req, res) => {
       // Descripción de la función...
   };
-
   const listarMateriasPorHorarioAlumno = async (req, res) => {
       // Descripción de la función...
   };
-
   const listarMateriasFaltantesPorAlumno = async (req, res) => {
       // Descripción de la función...
   };
-
   const listarMateriasYAlumnosPorDocente = async (req, res) => {
       // Descripción de la función...
   };
-
-  const obtenerTodosLosAlumnos = async (req, res) => {
+  const obtenerAlumnos = async (req, res) => {
       // Descripción de la función...
   };
-
-  const obtenerAlumnoPorId = async (req, res) => {
+  const obtenerAlumno = async (req, res) => {
       // Descripción de la función...
   };
-
-  const crearNuevoAlumno = async (req, res) => {
+  const crearAlumno = async (req, res) => {
       // Descripción de la función...
   };
-
   const actualizarAlumno = async (req, res) => {
       // Descripción de la función...
   };
-
   const eliminarAlumno = async (req, res) => {
       // Descripción de la función...
   };
 
-  > Se sigue la misma estructura para las entidades: Docente, Materia, Grupo, Aula, Plan de Estudios.
+  // > Se sigue la misma estructura para las entidades: Docente, Materia, Grupo, Aula, PlanDeEstudios.
+
+  // CONTROLADOR de importación de datos de prueba
+  const importarDatos = async (req, res) => {
+      try {
+          // Datos de prueba
+          const alumnos = [
+            // Datos
+          ];
+          const docentes = [
+            // Datos
+          ];
+          const materias = [
+            // Datos
+          ];
+          const grupos = [
+            // Datos
+          ];
+          const aulas = [
+            // Datos
+          ];
+          const planesDeEstudio = [
+            // Datos
+          ];
+
+          // Inserción de datos
+          await Alumno.insertMany(alumnos);
+          await Docente.insertMany(docentes);
+          await Materia.insertMany(materias);
+          await Grupo.insertMany(grupos);
+          await Aula.insertMany(aulas);
+          await Plandeestudios.insertMany(planesDeEstudio);
+
+          res.status(201).send("Datos importados exitosamente");
+      } catch (error) {
+          if (error.code === 11000) {
+              // Error de duplicación de clave
+              console.error("Error de duplicación:", error);
+              res.status(409).send("Error: Datos duplicados encontrados");
+          } else {
+              // Cualquier otro tipo de error
+              console.error("Error al importar los datos:", error);
+              res.status(500).send("Hubo un error al importar los datos");
+          }
+      }
+  };
+
+  module.exports = {
+      listarMateriasCursadasPorAlumno,
+      listarAlumnosPorMateriaYGrupo,
+      listarCalificacionesPorAlumno,
+      listarDocentesPorMateria,
+      listarAlumnosConCalificacionSuperior,
+      listarGruposPorMateria,
+      listarMateriasPorHorarioAlumno,
+      listarMateriasFaltantesPorAlumno,
+      listarMateriasYAlumnosPorDocente,
+      obtenerAlumno,
+      obtenerAlumnos,
+      crearAlumno,
+      actualizarAlumno,
+      eliminarAlumno,
+      obtenerDocente,
+      obtenerDocentes,
+      crearDocente,
+      actualizarDocente,
+      eliminarDocente,
+      obtenerMateria,
+      obtenerMaterias,
+      crearMateria,
+      actualizarMateria,
+      eliminarMateria,
+      obtenerGrupo,
+      obtenerGrupos,
+      crearGrupo,
+      actualizarGrupo,
+      eliminarGrupo,
+      obtenerAula,
+      obtenerAulas,
+      crearAula,
+      actualizarAula,
+      eliminarAula,
+      obtenerplandeestudios,
+      obtenerPlanesDeEstudio,
+      crearplandeestudios,
+      actualizarplandeestudios,
+      eliminarplandeestudios,
+      importarDatos
+  };
   ```
-
 ## **Rutas**
-
 ### **rutastecnm.js**
-
 - **Definición de Rutas**: Este archivo define las rutas para la API utilizando Express y los controladores correspondientes.
   ```js
   const express = require("express");
@@ -292,32 +365,40 @@
   const logger = require("../middleware/logger");
   const tecnmController = require("../controllers/controladorestecnm");
 
-  // Rutas de Queries
+  // Q1. Listar las materias que un alumno ha cursado.
   router.get("/alumnos/:id/materias", logger, tecnmController.listarMateriasCursadasPorAlumno);
+  // Q2. Listar los alumnos que están cursando una materia específica de un grupo específico.
   router.get("/grupos/:grupoId/materias/:materiaId/alumnos", logger, tecnmController.listarAlumnosPorMateriaYGrupo);
+  // Q3. Listar las calificaciones de un alumno en todas sus materias cursadas.
   router.get("/alumnos/:id/calificaciones", logger, tecnmController.listarCalificacionesPorAlumno);
+  // Q4. Listar los docentes que imparten una materia específica.
   router.get("/materias/:materiaId/docentes", logger, tecnmController.listarDocentesPorMateria);
+  // Q5. Listar los alumnos que han obtenido una calificación superior a 90 en una materia específica.
   router.get("/materias/:materiaId/alumnos/calificaciones", logger, tecnmController.listarAlumnosConCalificacionSuperior);
+  // Q6. Listar los grupos que correspondan a una materia específica.
   router.get("/materias/:materiaId/grupos", logger, tecnmController.listarGruposPorMateria);
+  // Q7. Listar las materias que cursa un alumno en específico (horario).
   router.get("/alumnos/:id/horario", logger, tecnmController.listarMateriasPorHorarioAlumno);
+  // Q8. Listar las materias que faltan por cursar a un alumno en específico.
   router.get("/alumnos/:id/materias/faltantes", logger, tecnmController.listarMateriasFaltantesPorAlumno);
+  // Q9. Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias.
   router.get("/docentes/:id/materias", logger, tecnmController.listarMateriasYAlumnosPorDocente);
-
-  // Rutas de CRUD por entidad
-  router.get("/alumnos", logger, tecnmController.obtenerTodosLosAlumnos);
-  router.get("/alumnos/:id", logger, tecnmController.obtenerAlumnoPorId);
-  router.post("/alumnos", logger, tecnmController.crearNuevoAlumno);
+  // CRUD Routes para alumnos
+  router.get("/alumnos", logger, tecnmController.obtenerAlumnos);
+  router.get("/alumnos/:id", logger, tecnmController.obtenerAlumno);
+  router.post("/alumnos", logger, tecnmController.crearAlumno);
   router.put("/alumnos/:id", logger, tecnmController.actualizarAlumno);
   router.delete("/alumnos/:id", logger, tecnmController.eliminarAlumno);
 
-  // Se sigue la misma estructura para las entidades: Docente, Materia, Grupo, Aula, Plan de Estudios.
+  // Se sigue la misma estructura para las entidades: Docentes, Materias, Grupos, Aulas, Plan de Estudios.
+
+  // RUTA para importación de datos de prueba
+  router.post("/importar-datos", tecnmController.importarDatos);
+  
   module.exports = router;
   ```
-
 ## **Modelos**
-
 ### **tecnm.js**
-
 - **Definición de Modelos**: Este archivo define los esquemas y modelos de Mongoose para cada entidad del proyecto.
   ```js
   const mongoose = require("mongoose");
@@ -353,7 +434,7 @@
       ]
   });
 
-  // Se siguen definiendo los esquemas para las entidades: Materia, Grupo, Aula, Plan de Estudios.
+  // > Se siguen definiendo los esquemas para las entidades: Materia, Grupo, Aula, Plan de Estudios.
 
   const Alumno = mongoose.model("Alumno", alumnoSchema);
   const Docente = mongoose.model("Docente", docenteSchema);
@@ -364,99 +445,147 @@
 
   module.exports = { Alumno, Docente, Materia, Grupo, Aula, Plandeestudios };
   ```
-
 ## **Middleware**
-
 ### **logger.js**
-
 - **Middleware de Registro**: Este archivo define un middleware para registrar las peticiones HTTP.
   ```js
-  const logger = (req, res, next) => {
-      console.log(`${req.method} ${req.url}`);
+  const redis = require("redis");
+  const client = redis.createClient({
+      url: `redis://redis02:6379`,
+  });
+
+  client.on("error", (err) => {
+      console.error("Redis error de conexion:", err);
+  });
+
+  client
+      .connect()
+      .then(() => {
+          console.log("Conectado a cliente de Redis de forma exitosa");
+      })
+      .catch((err) => {
+          console.error("Error conexion a Redis:", err);
+      });
+
+  const cache = (req, res, next) => {
+      res.on("finish", async () => {
+          if (!client.isOpen) {
+              console.error("Redis client -->> No conectado.");
+              return;
+          }
+          const key = `${req.method}:${Date.now()
+              }:${req.originalUrl}`;
+          const logEntry = JSON.stringify({
+              time: new Date(),
+              req: {
+                  method: req.method,
+                  path: req.route.path,
+                  url: req.originalUrl,
+                  headers: req.headers,
+                  query: req.query,
+                  params: req.params,
+                  body: req.body,
+              },
+              res: {
+                  statusCode: res.statusCode,
+                  statusMessage: res.statusMessage,
+              },
+          });
+          try {
+              await client.set(key, logEntry, "EX", 60 * 60 * 24);
+              // Recuperar el valor almacenado para verificar que se guardó correctamente
+              const value = await client.get(key);
+              if (value) {
+                  console.log("Almacenamiento exitoso:", value);
+              } else {
+                  console.error("No se encontró ningún valor para la clave:", key);
+              }
+          } catch (err) {
+              console.error("Error al salvar:", err);
+          }
+      });
       next();
   };
 
-  module.exports = logger;
+  module.exports = cache;
   ```
-
 ## **Conexión**
-
 ### **connection.js**
-
 - **Conexión a MongoDB y Redis**: Este archivo maneja la conexión a las bases de datos MongoDB y Redis.
   ```js
-  const mongoose = require("mongoose");
-  const redis = require("redis");
+  const mongoose = require("mongoose"); // Módulo para interactuar con MongoDB
+  const redis = require("redis"); // Módulo para interactuar con Redis
+  const Docker = require("dockerode"); // Módulo para interactuar con Docker
 
   async function connect() {
       try {
-          await mongoose.connect("mongodb://mongo01:27017,mongo02:27017,mongo03:27017/tecnm?replicaSet=replica01");
-          console.log("Conectado a MongoDB ReplicaSet");
+          // Conexión a MongoDB
+          await mongoose.connect(
+              "mongodb://mongo01:27017,mongo02:27017,mongo03:27017/tecnm?replicaSet=replica01"
+          );
+          console.log("Conectado a MongoDB ReplicaSet de forma exitosa"); // Mensaje de éxito en la conexión
       } catch (error) {
-          console.error("Error al conectar a MongoDB ReplicaSet:", error);
+          console.error("Error al conectar a MongoDB ReplicaSet:", error); // Mensaje de error en la conexión
       }
 
+      // Configuración de Redis
       const redisClient = redis.createClient({
-          url: `redis://redis02:6379`
+          url: `redis://redis02:6379`,
       });
 
       redisClient.on("error", (err) => {
-          console.error("Error en la conexión a Redis:", err);
+          console.error("Error en la conexión a Redis:", err); // Mensaje de error en la conexión a Redis
       });
 
-      redisClient.connect()
+      redisClient
+          .connect()
           .then(() => {
-              console.log("Conectado a Redis");
+              console.log("Conectado a Redis de forma exitosa");
           })
           .catch((err) => {
               console.error("No se pudo conectar a Redis:", err);
           });
 
+      // Crear una instancia de Docker
+      const docker = new Docker({ socketPath: '/var/run/docker.sock' });
+
+      // Eliminar el contenedor mongo-init-replica-1
+      docker.getContainer('caso-mongo-init-replica-1').remove({ force: true }, (err, data) => {
+          if (err) {
+              console.error(`Error al eliminar el contenedor caso-mongo-init-replica-1: ${err.message}`);
+          } else {
+              console.log('Contenedor temporal caso-mongo-init-replica-1 eliminado');
+          }
+      });
+
+      // Exportamos las instancias de mongoose y redisClient para usarlas en otras partes de la aplicación
       return { mongoose, redisClient };
   }
 
   module.exports = { connect };
   ```
-
 ## **Dockerfile**
-
 ### **Dockerfile**
-
 - **Configuración del Dockerfile**: Este archivo define cómo se construye la imagen de Docker para el proyecto.
-  ```Dockerfile
-  FROM node:14
-
+  ```dockerfile
+  FROM node
   WORKDIR /app
-
   COPY package*.json ./
-
   RUN npm install
-
   COPY . .
-
   EXPOSE 3000
-
   CMD ["npm", "start"]
   ```
-
 ### **Dockerfile.mongo-init**
-
 - **Configuración del Dockerfile para inicializar el ReplicaSet de MongoDB**: Este archivo define cómo se construye la imagen de Docker para la inicialización del ReplicaSet de MongoDB.
-  ```Dockerfile
+  ```dockerfile
   FROM mongo:latest
-
-
-
   COPY init-replica.sh /init-replica.sh
   RUN chmod +x /init-replica.sh
-
   CMD [ "bash", "-c", "/init-replica.sh & exec mongod --replSet replica01" ]
   ```
-
 ## **Docker Compose**
-
 ### **docker-compose.yml**
-
 - **Configuración de Docker Compose**: Este archivo define los servicios necesarios para el proyecto, incluyendo MongoDB, Redis y la aplicación Node.js.
   ```yaml
   version: '3.8'
@@ -474,6 +603,8 @@
         - mongo-init-replica
       networks:
         - red02
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
 
     redis02:
       image: redis
@@ -516,108 +647,23 @@
         - mongo03
       networks:
         - red02
-      restart: "no"
 
   networks:
     red02:
   ```
-
-## **Escenario de Datos**
-
-### **datos.mongodb.js**
-
-- **Escenario de Datos**: Este archivo contiene datos de prueba para ser importados a la base de datos MongoDB.
-  ```js
-  use('tecnm');
-  db.alumnos.insertMany([
-      {
-          "_id": "CURP001",
-          "nctrl": "20180001",
-          "nombre": "Ana L. Martínez",
-          "carrera": "Ingeniería en Sistemas Computacionales",
-          "tecnologico": "TecNM Campus Monterrey",
-          "planDeEstudios": "Plan001",
-          "expedienteAcademico": [
-              { "materia": "MAT001", "calificacion": 90, "semestre": "2020-1" },
-              { "materia": "IND001", "calificacion": 75, "semestre": "2020-1" },
-              { "materia": "CIV001", "calificacion": 95, "semestre": "2020-1" }
-          ],
-          "horario": ["G001", "G003", "G005"]
-      },
-      {
-          "_id": "CURP002",
-          "nctrl": "20180002",
-          "nombre": "Juan Pérez",
-          "carrera": "Ingeniería Mecatrónica",
-          "tecnologico": "TecNM Campus Monterrey",
-          "planDeEstudios": "Plan001",
-          "expedienteAcademico": [
-              { "materia": "MEC001", "calificacion": 88, "semestre": "2020-1" },
-              { "materia": "ELE001", "calificacion": 82, "semestre": "2020-1" }
-          ],
-          "horario": ["G002", "G004"]
-      },
-      // Más datos de alumnos...
-  ]);
-
-  db.docentes.insertMany([
-      {
-          "_id": "RFC001",
-          "nombre": "Dr. José Ramírez",
-          "carrera": "Ingeniería en Sistemas Computacionales",
-          "tecnologico": "TecNM Campus Monterrey",
-          "materiasImpartidas": [
-              { "materia": "MAT001", "grupo": "G001", "semestre": "2023-1" },
-              { "materia": "IND001", "grupo": "G003", "semestre": "2023-1" },
-              { "materia": "ELE001", "grupo": "G004", "semestre": "2023-1" }
-          ]
-      },
-      {
-          "_id": "RFC002",
-          "nombre": "Mtra. Laura Molina",
-          "carrera": "Ingeniería Mecatrónica",
-          "tecnologico": "TecNM Campus Monterrey",
-          "materiasImpartidas": [
-              { "materia": "MEC001", "grupo": "G002", "semestre": "2023-1" }
-          ]
-      },
-      // Más datos de docentes...
-  ]);
-
-  // Más datos para materias, grupos, aulas y plan de estudios...
-  ```
-
 ## **JSON Postman**
-
 - **JSON Postman**: Este archivo contiene todas las peticiones necesarias para probar la API en Postman.
   ```json
   {
-      "info": {
-          "name": "TecNM API",
-          "description": "Colección de peticiones para la API de TecNM",
-          "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-      },
-      "item": [
-          {
-              "name": "Importar Datos",
-              "request": {
-                  "method": "POST",
-                  "header": [],
-                  "body": {
-                      "mode": "raw",
-                      "raw": "{}"
-                  },
-                  "url": {
-                      "raw": "http://localhost:3000/tecnm/importar-datos",
-                      "protocol": "http",
-                      "host": ["localhost"],
-                      "port": "3000",
-                      "path": ["tecnm", "importar-datos"]
-                  }
-              }
-          },
-          // Más peticiones...
-      ]
+    "info": {
+      "_postman_id": "34d735d8-9f57-444e-b2f8-92ba991f365c",
+      "name": "TECNM",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "_exporter_id": "28686888"
+    },
+    "item": [
+      // SUBCARPETAS CON PETICIONES DE: IMPORT DE DATOS, QUERYS Y CRUD's DE ENTIDADES.
+    ]
   }
   ```
 # **5. Dockerfile**
