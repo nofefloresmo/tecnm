@@ -1,10 +1,7 @@
 # **TECNM**
 # **1. Incluir estructura del proyecto**
-  ```js
-  /*
+  ```markdown
   /CASO
-  |---/.vscode
-  |---/node_modules
   |---/src
   |   |---/controllers
   |   |   |---controladorestecnm.js
@@ -14,18 +11,14 @@
   |   |   |---tecnm.js
   |   |---/routes
   |   |   |---rutastecnm.js
-  |   |   |---connection.js
-  |   |---server.js
-  |---/.dockerignore
-  |---/.gitignore
+  |   |---/connection.js
+  |   |---/server.js
   |---/docker-compose.yml
   |---/Dockerfile
   |---/Dockerfile.mongo-init
   |---/init-replica.sh
   |---/package-lock.json
   |---/package.json
-  |---/README.md
-  */
   ```
 # **2. Modelado de datos (MongoDB, Redis)**
   ## Mongo
