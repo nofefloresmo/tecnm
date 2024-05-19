@@ -585,7 +585,7 @@
   CMD [ "bash", "-c", "/init-replica.sh & exec mongod --replSet replica01" ]
   ```
 #### **init-replica.sh**
-- **Archivo ejecutable que contiene los comandos de incialización del ReplicaSet de MongoDB** Este archivo se ejecuta en una instancia shell del futuro contenedor primario del ReplicaSet de MongoDB.
+- **Archivo ejecutable que contiene los comandos de incialización del ReplicaSet de MongoDB**: Este archivo se ejecuta en una instancia shell del futuro contenedor primario del ReplicaSet de MongoDB.
   ```bash
   echo "Esperando a que MongoDB esté listo..."
   until mongosh --host mongo01 --eval "print(\"conexion exitosa\")"; do
