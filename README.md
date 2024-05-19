@@ -183,7 +183,6 @@
   - **Q8** Listar las materias que faltan por cursar a un alumno en específico.
   - **Q9** Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias.
 # **4. Códigos y procedimientos documentados**
-```markdown
 ## **Controladores**
 ### **controladorestecnm.js**
 - **listarMateriasCursadasPorAlumno**: Esta función utiliza un `aggregate` de MongoDB para buscar las materias cursadas por un alumno específico y proyectar los detalles relevantes.
@@ -621,7 +620,6 @@
       ]
   }
   ```
-```
 # **5. Dockerfile**
   ```dockerfile
 FROM node
