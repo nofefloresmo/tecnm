@@ -667,7 +667,7 @@
   ```
 ## **JSON Postman**
 - **JSON Postman**: Este archivo contiene todas las peticiones necesarias para probar la API en Postman.
-  ```json
+  ```js
   {
     "info": {
       "_postman_id": "34d735d8-9f57-444e-b2f8-92ba991f365c",
