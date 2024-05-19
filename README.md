@@ -183,6 +183,445 @@
   - **Q8** Listar las materias que faltan por cursar a un alumno en específico.
   - **Q9** Listar las materias que imparte un docente en específico, junto con los alumnos que cursan cada una de las materias.
 # **4. Códigos y procedimientos documentados**
+```markdown
+## **Controladores**
+### **controladorestecnm.js**
+- **listarMateriasCursadasPorAlumno**: Esta función utiliza un `aggregate` de MongoDB para buscar las materias cursadas por un alumno específico y proyectar los detalles relevantes.
+  ```js
+  const listarMateriasCursadasPorAlumno = async (req, res) => {
+      try {
+          const alumnoId = req.params.id;
+          const alumno = await Alumno.aggregate([
+              { $match: { "_id": alumnoId } },
+              { $unwind: "$expedienteAcademico" },
+              {
+                  $lookup: {
+                      from: "materias",
+                      localField: "expedienteAcademico.materia",
+                      foreignField: "_id",
+                      as: "materiaDetalles"
+                  }
+              },
+              { $unwind: "$materiaDetalles" },
+              {
+                  $project: {
+                      "nombreAlumno": "$nombre",
+                      "materia": "$materiaDetalles.nombre",
+                      "descripcion": "$materiaDetalles.descripcion",
+                      "calificacion": "$expedienteAcademico.calificacion",
+                      "semestre": "$expedienteAcademico.semestre"
+                  }
+              }
+          ]);
+
+          if (!alumno || alumno.length === 0) {
+              return res.status(404).send("Alumno no encontrado");
+          }
+
+          res.json(alumno);
+      } catch (error) {
+          console.error("Error al obtener las materias del alumno:", error);
+          res.status(500).send("Hubo un error al obtener las materias del alumno");
+      }
+  };
+  ```
+- **Aquí van las consultas restantes**: Se sigue la misma estructura para las demás consultas GET, POST, PUT y DELETE, documentando brevemente cada una de ellas.
+  ```js
+  const listarAlumnosPorMateriaYGrupo = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const listarCalificacionesPorAlumno = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const listarDocentesPorMateria = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const listarAlumnosConCalificacionSuperior = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const listarGruposPorMateria = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const listarMateriasPorHorarioAlumno = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const listarMateriasFaltantesPorAlumno = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const listarMateriasYAlumnosPorDocente = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const obtenerTodosLosAlumnos = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const obtenerAlumnoPorId = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const crearNuevoAlumno = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const actualizarAlumno = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  const eliminarAlumno = async (req, res) => {
+      // Descripción de la función...
+  };
+
+  > Se sigue la misma estructura para las entidades: Docente, Materia, Grupo, Aula, Plan de Estudios.
+  ```
+
+## **Rutas**
+
+### **rutastecnm.js**
+
+- **Definición de Rutas**: Este archivo define las rutas para la API utilizando Express y los controladores correspondientes.
+  ```js
+  const express = require("express");
+  const router = express.Router();
+  const logger = require("../middleware/logger");
+  const tecnmController = require("../controllers/controladorestecnm");
+
+  // Rutas de Queries
+  router.get("/alumnos/:id/materias", logger, tecnmController.listarMateriasCursadasPorAlumno);
+  router.get("/grupos/:grupoId/materias/:materiaId/alumnos", logger, tecnmController.listarAlumnosPorMateriaYGrupo);
+  router.get("/alumnos/:id/calificaciones", logger, tecnmController.listarCalificacionesPorAlumno);
+  router.get("/materias/:materiaId/docentes", logger, tecnmController.listarDocentesPorMateria);
+  router.get("/materias/:materiaId/alumnos/calificaciones", logger, tecnmController.listarAlumnosConCalificacionSuperior);
+  router.get("/materias/:materiaId/grupos", logger, tecnmController.listarGruposPorMateria);
+  router.get("/alumnos/:id/horario", logger, tecnmController.listarMateriasPorHorarioAlumno);
+  router.get("/alumnos/:id/materias/faltantes", logger, tecnmController.listarMateriasFaltantesPorAlumno);
+  router.get("/docentes/:id/materias", logger, tecnmController.listarMateriasYAlumnosPorDocente);
+
+  // Rutas de CRUD por entidad
+  router.get("/alumnos", logger, tecnmController.obtenerTodosLosAlumnos);
+  router.get("/alumnos/:id", logger, tecnmController.obtenerAlumnoPorId);
+  router.post("/alumnos", logger, tecnmController.crearNuevoAlumno);
+  router.put("/alumnos/:id", logger, tecnmController.actualizarAlumno);
+  router.delete("/alumnos/:id", logger, tecnmController.eliminarAlumno);
+
+  // Se sigue la misma estructura para las entidades: Docente, Materia, Grupo, Aula, Plan de Estudios.
+  module.exports = router;
+  ```
+
+## **Modelos**
+
+### **tecnm.js**
+
+- **Definición de Modelos**: Este archivo define los esquemas y modelos de Mongoose para cada entidad del proyecto.
+  ```js
+  const mongoose = require("mongoose");
+
+  const alumnoSchema = new mongoose.Schema({
+      _id: String,
+      nctrl: String,
+      nombre: String,
+      carrera: String,
+      tecnologico: String,
+      planDeEstudios: String,
+      expedienteAcademico: [
+          {
+              materia: String,
+              calificacion: Number,
+              semestre: String
+          }
+      ],
+      horario: [String]
+  });
+
+  const docenteSchema = new mongoose.Schema({
+      _id: String,
+      nombre: String,
+      carrera: String,
+      tecnologico: String,
+      materiasImpartidas: [
+          {
+              materia: String,
+              grupo: String,
+              semestre: String
+          }
+      ]
+  });
+
+  // Se siguen definiendo los esquemas para las entidades: Materia, Grupo, Aula, Plan de Estudios.
+
+  const Alumno = mongoose.model("Alumno", alumnoSchema);
+  const Docente = mongoose.model("Docente", docenteSchema);
+  const Materia = mongoose.model("Materia", materiaSchema);
+  const Grupo = mongoose.model("Grupo", grupoSchema);
+  const Aula = mongoose.model("Aula", aulaSchema);
+  const Plandeestudios = mongoose.model("Plandeestudios", planDeEstudiosSchema);
+
+  module.exports = { Alumno, Docente, Materia, Grupo, Aula, Plandeestudios };
+  ```
+
+## **Middleware**
+
+### **logger.js**
+
+- **Middleware de Registro**: Este archivo define un middleware para registrar las peticiones HTTP.
+  ```js
+  const logger = (req, res, next) => {
+      console.log(`${req.method} ${req.url}`);
+      next();
+  };
+
+  module.exports = logger;
+  ```
+
+## **Conexión**
+
+### **connection.js**
+
+- **Conexión a MongoDB y Redis**: Este archivo maneja la conexión a las bases de datos MongoDB y Redis.
+  ```js
+  const mongoose = require("mongoose");
+  const redis = require("redis");
+
+  async function connect() {
+      try {
+          await mongoose.connect("mongodb://mongo01:27017,mongo02:27017,mongo03:27017/tecnm?replicaSet=replica01");
+          console.log("Conectado a MongoDB ReplicaSet");
+      } catch (error) {
+          console.error("Error al conectar a MongoDB ReplicaSet:", error);
+      }
+
+      const redisClient = redis.createClient({
+          url: `redis://redis02:6379`
+      });
+
+      redisClient.on("error", (err) => {
+          console.error("Error en la conexión a Redis:", err);
+      });
+
+      redisClient.connect()
+          .then(() => {
+              console.log("Conectado a Redis");
+          })
+          .catch((err) => {
+              console.error("No se pudo conectar a Redis:", err);
+          });
+
+      return { mongoose, redisClient };
+  }
+
+  module.exports = { connect };
+  ```
+
+## **Dockerfile**
+
+### **Dockerfile**
+
+- **Configuración del Dockerfile**: Este archivo define cómo se construye la imagen de Docker para el proyecto.
+  ```Dockerfile
+  FROM node:14
+
+  WORKDIR /app
+
+  COPY package*.json ./
+
+  RUN npm install
+
+  COPY . .
+
+  EXPOSE 3000
+
+  CMD ["npm", "start"]
+  ```
+
+### **Dockerfile.mongo-init**
+
+- **Configuración del Dockerfile para inicializar el ReplicaSet de MongoDB**: Este archivo define cómo se construye la imagen de Docker para la inicialización del ReplicaSet de MongoDB.
+  ```Dockerfile
+  FROM mongo:latest
+
+
+
+  COPY init-replica.sh /init-replica.sh
+  RUN chmod +x /init-replica.sh
+
+  CMD [ "bash", "-c", "/init-replica.sh & exec mongod --replSet replica01" ]
+  ```
+
+## **Docker Compose**
+
+### **docker-compose.yml**
+
+- **Configuración de Docker Compose**: Este archivo define los servicios necesarios para el proyecto, incluyendo MongoDB, Redis y la aplicación Node.js.
+  ```yaml
+  version: '3.8'
+
+  services:
+    app:
+      build: .
+      ports:
+        - "3000:3000"
+      depends_on:
+        - redis02
+        - mongo01
+        - mongo02
+        - mongo03
+        - mongo-init-replica
+      networks:
+        - red02
+
+    redis02:
+      image: redis
+      ports:
+        - "6379:6379"
+      networks:
+        - red02
+
+    mongo01:
+      image: mongo:latest
+      command: [ "mongod", "--replSet", "replica01" ]
+      ports:
+        - "27020:27017"
+      networks:
+        - red02
+
+    mongo02:
+      image: mongo:latest
+      command: [ "mongod", "--replSet", "replica01" ]
+      ports:
+        - "27021:27017"
+      networks:
+        - red02
+
+    mongo03:
+      image: mongo:latest
+      command: [ "mongod", "--replSet", "replica01" ]
+      ports:
+        - "27022:27017"
+      networks:
+        - red02
+
+    mongo-init-replica:
+      build:
+        context: .
+        dockerfile: Dockerfile.mongo-init
+      depends_on:
+        - mongo01
+        - mongo02
+        - mongo03
+      networks:
+        - red02
+      restart: "no"
+
+  networks:
+    red02:
+  ```
+
+## **Escenario de Datos**
+
+### **datos.mongodb.js**
+
+- **Escenario de Datos**: Este archivo contiene datos de prueba para ser importados a la base de datos MongoDB.
+  ```js
+  use('tecnm');
+  db.alumnos.insertMany([
+      {
+          "_id": "CURP001",
+          "nctrl": "20180001",
+          "nombre": "Ana L. Martínez",
+          "carrera": "Ingeniería en Sistemas Computacionales",
+          "tecnologico": "TecNM Campus Monterrey",
+          "planDeEstudios": "Plan001",
+          "expedienteAcademico": [
+              { "materia": "MAT001", "calificacion": 90, "semestre": "2020-1" },
+              { "materia": "IND001", "calificacion": 75, "semestre": "2020-1" },
+              { "materia": "CIV001", "calificacion": 95, "semestre": "2020-1" }
+          ],
+          "horario": ["G001", "G003", "G005"]
+      },
+      {
+          "_id": "CURP002",
+          "nctrl": "20180002",
+          "nombre": "Juan Pérez",
+          "carrera": "Ingeniería Mecatrónica",
+          "tecnologico": "TecNM Campus Monterrey",
+          "planDeEstudios": "Plan001",
+          "expedienteAcademico": [
+              { "materia": "MEC001", "calificacion": 88, "semestre": "2020-1" },
+              { "materia": "ELE001", "calificacion": 82, "semestre": "2020-1" }
+          ],
+          "horario": ["G002", "G004"]
+      },
+      // Más datos de alumnos...
+  ]);
+
+  db.docentes.insertMany([
+      {
+          "_id": "RFC001",
+          "nombre": "Dr. José Ramírez",
+          "carrera": "Ingeniería en Sistemas Computacionales",
+          "tecnologico": "TecNM Campus Monterrey",
+          "materiasImpartidas": [
+              { "materia": "MAT001", "grupo": "G001", "semestre": "2023-1" },
+              { "materia": "IND001", "grupo": "G003", "semestre": "2023-1" },
+              { "materia": "ELE001", "grupo": "G004", "semestre": "2023-1" }
+          ]
+      },
+      {
+          "_id": "RFC002",
+          "nombre": "Mtra. Laura Molina",
+          "carrera": "Ingeniería Mecatrónica",
+          "tecnologico": "TecNM Campus Monterrey",
+          "materiasImpartidas": [
+              { "materia": "MEC001", "grupo": "G002", "semestre": "2023-1" }
+          ]
+      },
+      // Más datos de docentes...
+  ]);
+
+  // Más datos para materias, grupos, aulas y plan de estudios...
+  ```
+
+## **JSON Postman**
+
+- **JSON Postman**: Este archivo contiene todas las peticiones necesarias para probar la API en Postman.
+  ```json
+  {
+      "info": {
+          "name": "TecNM API",
+          "description": "Colección de peticiones para la API de TecNM",
+          "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+      },
+      "item": [
+          {
+              "name": "Importar Datos",
+              "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                      "mode": "raw",
+                      "raw": "{}"
+                  },
+                  "url": {
+                      "raw": "http://localhost:3000/tecnm/importar-datos",
+                      "protocol": "http",
+                      "host": ["localhost"],
+                      "port": "3000",
+                      "path": ["tecnm", "importar-datos"]
+                  }
+              }
+          },
+          // Más peticiones...
+      ]
+  }
+  ```
+```
 # **5. Dockerfile**
   ```dockerfile
 FROM node
@@ -1574,3 +2013,4 @@ COPY init-replica.sh /init-replica.sh
 RUN chmod +x /init-replica.sh
 CMD [ "bash", "-c", "/init-replica.sh & exec mongod --replSet replica01" ]
 ```
+`
