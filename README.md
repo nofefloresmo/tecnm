@@ -584,6 +584,27 @@
   RUN chmod +x /init-replica.sh
   CMD [ "bash", "-c", "/init-replica.sh & exec mongod --replSet replica01" ]
   ```
+#### **init-replica.sh**
+- **Archivo ejecutable que contiene los comandos de incialización del ReplicaSet de MongoDB** Este archivo se ejecuta en una instancia shell del futuro contenedor primario del ReplicaSet de MongoDB.
+  ```bash
+  echo "Esperando a que MongoDB esté listo..."
+  until mongosh --host mongo01 --eval "print(\"conexion exitosa\")"; do
+    sleep 5
+  done
+  echo "Inicializando el replicaset..."
+  mongosh --host mongo01 <<EOF
+  rs.initiate({
+    _id: 'replica01',
+    members: [
+      { _id: 0, host: 'mongo01:27017' },
+      { _id: 1, host: 'mongo02:27017' },
+      { _id: 2, host: 'mongo03:27017' }
+    ]
+  })
+  EOF
+  echo "Replicaset inicializado."
+  exit 0
+  ```
 ## **Docker Compose**
 ### **docker-compose.yml**
 - **Configuración de Docker Compose**: Este archivo define los servicios necesarios para el proyecto, incluyendo MongoDB, Redis y la aplicación Node.js.
