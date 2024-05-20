@@ -216,9 +216,7 @@
           res.status(500).send("Hubo un error al obtener las materias del alumno");
       }
   };
-  ```
-- **Aquí van las consultas restantes**: Se sigue la misma estructura para las demás consultas GET, POST, PUT y DELETE, documentando brevemente cada una de ellas.
-  ```js
+  //- **Aquí van las consultas restantes**: Se sigue la misma estructura para las demás consultas GET, POST, PUT y DELETE, documentando brevemente cada una de ellas.
   const listarAlumnosPorMateriaYGrupo = async (req, res) => {
       // Descripción de la función...
   };
