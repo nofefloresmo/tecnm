@@ -17,6 +17,14 @@ client
     });
 
 const cache = (req, res, next) => {
+    let originalSend = res.send;
+    let responseBody;
+
+    res.send = function (body) {
+        responseBody = body;
+        originalSend.call(this, body);
+    };
+
     res.on("finish", async () => {
         if (!client.isOpen) {
             console.error("Redis client -->> No conectado.");
@@ -38,6 +46,7 @@ const cache = (req, res, next) => {
             res: {
                 statusCode: res.statusCode,
                 statusMessage: res.statusMessage,
+                body: JSON.parse(responseBody), // Guardar el cuerpo de la respuesta
             },
         });
         try {
