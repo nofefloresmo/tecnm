@@ -623,7 +623,7 @@
 
   services:
     app:
-      build: .
+      image: nofefloresmo/caso:caso-app-tag
       ports:
         - "3000:3000"
       depends_on:
@@ -669,9 +669,7 @@
         - red02
 
     mongo-init-replica:
-      build:
-        context: .
-        dockerfile: Dockerfile.mongo-init
+      image: nofefloresmo/caso:caso-mongo-init-replica-tag
       depends_on:
         - mongo01
         - mongo02
@@ -681,6 +679,7 @@
 
   networks:
     red02:
+
   ```
 ## **JSON Postman**
 - **JSON Postman**: Este archivo contiene todas las peticiones necesarias para probar la API en Postman.
@@ -712,65 +711,63 @@ CMD ["npm", "start"]
 version: '3.8'
 
 services:
-app:
-    build: .
+  app:
+    image: nofefloresmo/caso:caso-app-tag
     ports:
-    - "3000:3000"
+      - "3000:3000"
     depends_on:
-    - redis02
-    - mongo01
-    - mongo02
-    - mongo03
-    - mongo-init-replica
+      - redis02
+      - mongo01
+      - mongo02
+      - mongo03
+      - mongo-init-replica
     networks:
-    - red02
+      - red02
     volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
 
-redis02:
+  redis02:
     image: redis
     ports:
-    - "6379:6379"
+      - "6379:6379"
     networks:
-    - red02
+      - red02
 
-mongo01:
+  mongo01:
     image: mongo:latest
     command: [ "mongod", "--replSet", "replica01" ]
     ports:
-    - "27020:27017"
+      - "27020:27017"
     networks:
-    - red02
+      - red02
 
-mongo02:
+  mongo02:
     image: mongo:latest
     command: [ "mongod", "--replSet", "replica01" ]
     ports:
-    - "27021:27017"
+      - "27021:27017"
     networks:
-    - red02
+      - red02
 
-mongo03:
+  mongo03:
     image: mongo:latest
     command: [ "mongod", "--replSet", "replica01" ]
     ports:
-    - "27022:27017"
+      - "27022:27017"
     networks:
-    - red02
+      - red02
 
-mongo-init-replica:
-    build:
-    context: .
-    dockerfile: Dockerfile.mongo-init
+  mongo-init-replica:
+    image: nofefloresmo/caso:caso-mongo-init-replica-tag
     depends_on:
-    - mongo01
-    - mongo02
-    - mongo03
+      - mongo01
+      - mongo02
+      - mongo03
     networks:
-    - red02
+      - red02
 
 networks:
-red02:
+  red02:
 ```
 # **7. Escenario de datos**
   ```js
