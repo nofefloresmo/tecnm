@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    build: .
+    image: nofefloresmo/caso:caso-app-tag
     ports:
       - "3000:3000"
     depends_on:
@@ -48,9 +48,7 @@ services:
       - red02
 
   mongo-init-replica:
-    build:
-      context: .
-      dockerfile: Dockerfile.mongo-init
+    image: nofefloresmo/caso:caso-mongo-init-replica-tag
     depends_on:
       - mongo01
       - mongo02
