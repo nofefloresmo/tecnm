@@ -530,25 +530,42 @@
           console.error("Error en la conexión a Redis:", err); // Mensaje de error en la conexión a Redis
       });
 
-      redisClient
-          .connect()
-          .then(() => {
+      redisClient.connect().then(() => {
               console.log("Conectado a Redis de forma exitosa");
-          })
-          .catch((err) => {
+          }).catch((err) => {
               console.error("No se pudo conectar a Redis:", err);
           });
 
       // Crear una instancia de Docker
       const docker = new Docker({ socketPath: '/var/run/docker.sock' });
 
-      // Eliminar el contenedor mongo-init-replica-1
-      docker.getContainer('caso-mongo-init-replica-1').remove({ force: true }, (err, data) => {
+      // Listar todos los contenedores
+      docker.listContainers((err, containers) => {
           if (err) {
-              console.error(`Error al eliminar el contenedor caso-mongo-init-replica-1: ${err.message}`);
-          } else {
-              console.log('Contenedor temporal caso-mongo-init-replica-1 eliminado');
+              console.error(`Error al listar contenedores: ${err.message}`);
+              return;
           }
+
+          // Buscar el contenedor que incluye "mongo-init-replica" en su nombre
+          const containerInfo = containers.find(container =>
+              container.Names.some(name => name.includes('mongo-init-replica'))
+          );
+
+          if (!containerInfo) {
+              console.log('No se encontró ningún contenedor temporal mongo-init-replica');
+              return;
+          }
+
+          const containerId = containerInfo.Id;
+
+          // Eliminar el contenedor
+          docker.getContainer(containerId).remove({ force: true }, (err, data) => {
+              if (err) {
+                  console.error(`Error al eliminar el contenedor ${containerId}: ${err.message}`);
+              } else {
+                  console.log(`Contenedor temporal ${containerInfo.Names} eliminado`);
+              }
+          });
       });
 
       // Exportamos las instancias de mongoose y redisClient para usarlas en otras partes de la aplicación
