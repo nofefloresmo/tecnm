@@ -46,7 +46,7 @@ const cache = (req, res, next) => {
             res: {
                 statusCode: res.statusCode,
                 statusMessage: res.statusMessage,
-                body: JSON.parse(responseBody), // Guardar el cuerpo de la respuesta
+                body: res.statusCode == 404 ? 'NaN' : JSON.parse(responseBody), // Guardar el cuerpo de la respuesta
             },
         });
         try {
