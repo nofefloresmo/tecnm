@@ -2084,3 +2084,9 @@ COPY init-replica.sh /init-replica.sh
 RUN chmod +x /init-replica.sh
 CMD [ "bash", "-c", "/init-replica.sh & exec mongod --replSet replica01" ]
 ```
+# **EXTRA. Aplicación Flutter para Interacción con la API**
+```plaintext
+En el repositorio [nosql_interfaz_de_prueba](https://github.com/nofefloresmo/nosql_interfaz_de_prueba) se encuentra una aplicación Dart en Flutter que permite interactuar y probar la colección de peticiones de la API creada en Docker. Esta aplicación incluye pantallas para gestionar alumnos, docentes, materias, grupos, aulas y planes de estudio, así como ejecutar consultas específicas sobre los datos almacenados.
+
+La aplicación Flutter proporciona una interfaz de usuario amigable para realizar operaciones CRUD y consultar los datos mediante las API expuestas por el servidor Docker. Esta herramienta facilita la verificación y prueba de la funcionalidad de la API de manera interactiva.
+```
